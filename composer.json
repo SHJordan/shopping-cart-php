@@ -1,0 +1,10 @@
+{
+    "name": "jordan/shopping-cart-php",
+    "authors": [
+        {
+            "name": "Jordan Humberto de Souza",
+            "email": "shjordanx@gmail.com"
+        }
+    ],
+    "require": {}
+}
