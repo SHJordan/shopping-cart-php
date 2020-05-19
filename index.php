@@ -62,16 +62,16 @@ if (isset($_GET["action"])) {
     $query = "select * from tbl_product order by id";
     $result = $connect->query($query);
     if ($result->num_rows > 0) {
-        while ($row = $result->fetch_object()) { ?>
+        while ($product = $result->fetch_object()) { ?>
           <div class="col-md-4">
-            <form method="post" action="index.php?action=add&id=<?= $row->id; ?>">
+            <form method="post" action="index.php?action=add&id=<?= $product->id; ?>">
               <div class="div-inner-form">
-                <img alt="Imagem" src="./images/<?= $row->image; ?>" class="img-responsive center-block"/><br/>
-                <h4 class="text-info"><?= $row->name; ?></h4>
-                <h4 class="text-danger">$ <?= $row->price; ?></h4>
+                <img alt="Imagem" src="./images/<?= $product->image; ?>" class="img-responsive center-block"/><br/>
+                <h4 class="text-info"><?= $product->name; ?></h4>
+                <h4 class="text-danger">$ <?= $product->price; ?></h4>
                 <input aria-label="Quantidade" type="number" name="quantity" value="1" class="form-control"/>
-                <input type="hidden" name="hidden_name" value="<?= $row->name; ?>"/>
-                <input type="hidden" name="hidden_price" value="<?= $row->price; ?>"/>
+                <input type="hidden" name="hidden_name" value="<?= $product->name; ?>"/>
+                <input type="hidden" name="hidden_price" value="<?= $product->price; ?>"/>
                 <input type="submit" name="add_to_cart" class="btn btn-success add_to_cart" value="Add to Cart"/>
               </div>
             </form>
