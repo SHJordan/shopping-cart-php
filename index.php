@@ -105,7 +105,7 @@ if (isset($_GET["action"])) {
                 </td>
               </tr>
                 <?php
-                $total = $total + ($values["item_quantity"] * $values["item_price"]);
+                $total += $values["item_quantity"] * $values["item_price"];
             }
             ?>
           <tr>
