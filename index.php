@@ -42,6 +42,7 @@ if (isset($_GET["action"])) {
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shopping Cart In PHP and MySQL</title>
@@ -55,7 +56,7 @@ if (isset($_GET["action"])) {
   <br/>
   <br/>
   <br/>
-  <h3 style="text-align:center;">Shopping Cart With PHP And MySQL</h3><br/>
+  <h3>Shopping Cart With PHP And MySQL</h3><br/>
   <br/><br/>
     <?php
     $query = "select * from tbl_product order by id";
@@ -64,31 +65,31 @@ if (isset($_GET["action"])) {
         while ($row = $result->fetch_object()) { ?>
           <div class="col-md-4">
             <form method="post" action="index.php?action=add&id=<?= $row->id; ?>">
-              <div style="border:3px solid #5cb85c; background-color:whitesmoke; border-radius:5px; padding:16px; text-align:center; margin-top: 1.1em;">
+              <div class="div-inner-form">
                 <img alt="Imagem" src="./images/<?= $row->image; ?>" class="img-responsive center-block"/><br/>
                 <h4 class="text-info"><?= $row->name; ?></h4>
                 <h4 class="text-danger">$ <?= $row->price; ?></h4>
                 <input aria-label="Quantidade" type="number" name="quantity" value="1" class="form-control"/>
                 <input type="hidden" name="hidden_name" value="<?= $row->name; ?>"/>
                 <input type="hidden" name="hidden_price" value="<?= $row->price; ?>"/>
-                <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart"/>
+                <input type="submit" name="add_to_cart" class="btn btn-success add_to_cart" value="Add to Cart"/>
               </div>
             </form>
           </div>
             <?php
         }
     } ?>
-  <div style="clear:both"></div>
+  <div class="clear"></div>
   <br/>
   <h3>Order Details</h3>
   <div class="table-responsive">
     <table class="table table-bordered">
       <tr>
-        <th style="width: 40%;">Item Name</th>
-        <th style="width: 10%;">Quantity</th>
-        <th style="width: 20%;">Price</th>
-        <th style="width: 15%;">Total</th>
-        <th style="width: 5%;">Action</th>
+        <th class="th40">Item Name</th>
+        <th class="th10">Quantity</th>
+        <th class="th20">Price</th>
+        <th class="th15">Total</th>
+        <th class="th5">Action</th>
       </tr>
         <?php
         if ( ! empty($_SESSION["shopping_cart"])) {
@@ -109,8 +110,8 @@ if (isset($_GET["action"])) {
             }
             ?>
           <tr>
-            <td colspan="3" style="text-align:right;">Total</td>
-            <td style="text-align:right;">$ <?= number_format($total, 2); ?></td>
+            <td colspan="3">Total</td>
+            <td>$ <?= number_format($total, 2); ?></td>
             <td></td>
           </tr>
             <?php
