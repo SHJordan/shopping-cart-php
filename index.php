@@ -5,7 +5,7 @@ $connect = new mysqli("localhost", "root", "", "cart");
 if (isset($_POST["add_to_cart"])) {
     if (isset($_SESSION["shopping_cart"])) {
         $item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
-        if ( ! in_array($_GET["id"], $item_array_id)) {
+        if ( !in_array($_GET["id"], $item_array_id, true)) {
             $count = count($_SESSION["shopping_cart"]);
             $item_array = array(
                 'item_id'       => $_GET["id"],
@@ -27,14 +27,12 @@ if (isset($_POST["add_to_cart"])) {
         $_SESSION["shopping_cart"][0] = $item_array;
     }
 }
-if (isset($_GET["action"])) {
-    if ($_GET["action"] == "delete") {
-        foreach ($_SESSION["shopping_cart"] as $keys => $values) {
-            if ($values["item_id"] == $_GET["id"]) {
-                unset($_SESSION["shopping_cart"][$keys]);
-                echo '<script>alert("Item Removed")</script>';
-                echo '<script>window.location="index.php"</script>';
-            }
+if (isset($_GET["action"]) && $_GET["action"] === "delete") {
+    foreach ($_SESSION["shopping_cart"] as $keys => $values) {
+        if ($values["item_id"] === $_GET["id"]) {
+            unset($_SESSION["shopping_cart"][$keys]);
+            echo '<script>alert("Item Removed")</script>';
+            echo '<script>window.location="index.php"</script>';
         }
     }
 }
@@ -64,14 +62,14 @@ if (isset($_GET["action"])) {
     if ($result->num_rows > 0) {
         while ($product = $result->fetch_object()) { ?>
           <div class="col-md-4">
-            <form method="post" action="index.php?action=add&id=<?= $product->id; ?>">
+            <form method="post" action="index.php?action=add&id=<?= $product->id ?>">
               <div class="div-inner-form">
-                <img alt="Imagem" src="./images/<?= $product->image; ?>" class="img-responsive center-block"/><br/>
-                <h4 class="text-info"><?= $product->name; ?></h4>
-                <h4 class="text-danger">$ <?= $product->price; ?></h4>
+                <img alt="Imagem" src="./images/<?= $product->image ?>" class="img-responsive center-block"/><br/>
+                <h4 class="text-info"><?= $product->name ?></h4>
+                <h4 class="text-danger">$ <?= $product->price ?></h4>
                 <input aria-label="Quantidade" type="number" name="quantity" value="1" class="form-control"/>
-                <input type="hidden" name="hidden_name" value="<?= $product->name; ?>"/>
-                <input type="hidden" name="hidden_price" value="<?= $product->price; ?>"/>
+                <input type="hidden" name="hidden_name" value="<?= $product->name ?>"/>
+                <input type="hidden" name="hidden_price" value="<?= $product->price ?>"/>
                 <input type="submit" name="add_to_cart" class="btn btn-success add_to_cart" value="Add to Cart"/>
               </div>
             </form>
@@ -97,12 +95,12 @@ if (isset($_GET["action"])) {
             foreach ($_SESSION["shopping_cart"] as $keys => $values) {
                 ?>
               <tr>
-                <td><?= $values["item_name"]; ?></td>
-                <td><?= $values["item_quantity"]; ?></td>
-                <td>$ <?= $values["item_price"]; ?></td>
-                <td>$ <?= number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>
+                <td><?= $values["item_name"] ?></td>
+                <td><?= $values["item_quantity"] ?></td>
+                <td>$ <?= $values["item_price"] ?></td>
+                <td>$ <?= number_format($values["item_quantity"] * $values["item_price"], 2) ?></td>
                 <td>
-                  <a href="index.php?action=delete&id=<?= $values["item_id"]; ?>"><span class="text-danger">Remove</span></a>
+                  <a href="index.php?action=delete&id=<?= $values["item_id"] ?>"><span class="text-danger">Remove</span></a>
                 </td>
               </tr>
                 <?php
@@ -111,7 +109,7 @@ if (isset($_GET["action"])) {
             ?>
           <tr>
             <td colspan="3">Total</td>
-            <td>$ <?= number_format($total, 2); ?></td>
+            <td>$ <?= number_format($total, 2) ?></td>
             <td></td>
           </tr>
             <?php
